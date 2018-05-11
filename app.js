@@ -15,14 +15,16 @@ app.use(cors())
 
 app.post('/messages', (req, res) => {
     console.log(req.body)
-    const options = {
-        body: req.body.message,
-        from: '+17122019171',
-        to: req.body.numbers
+    for (i = 0; i < req.body.numbers.length; i++) {
+        const options = {
+            body: req.body.message,
+            from: '+17122019171',
+            to: req.body.numbers[i]
+        }
+        client.messages.create(options, {
+        }).then(message => console.log(message.sid))
+            .done()
     }
-    client.messages.create(options, {
-    }).then(message => console.log(message.sid))
-        .done()
 })
 
 app.get('/information', (req, res) => {
